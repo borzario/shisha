@@ -9,7 +9,7 @@ import keyboard_main
 from data_base import sql_db
 from client import *
 from admins import *
-import zakazaka
+#import zakazaka
 
 async def on_startup(_):
     print("Папа в здании")
