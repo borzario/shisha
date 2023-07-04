@@ -22,10 +22,8 @@ temp_user = {}
 @dp.callback_query_handler(text="в начало")
 @dp.message_handler(lambda message: message.text.lower() in ["в начало", '/main'])
 async def salam(message: types.Message):
-    """await bot.send_photo(message.from_user.id,
-                         "AgACAgEAAxkBAAIHRGMLJhCchUeJOxUi85ASQ0wy1pXOAAKNqjEbh4xZRN1YiXXKQzlcAQADAgADcwADKQQ")"""
     if message.from_user.id in pers.amdins:
-        await bot.send_message(message.from_user.id, "Салам, родная",
+        await bot.send_message(message.from_user.id, "Салам, родной",
                                reply_markup=keyboard_main.kb_mainwindow_admin)
     else:
         await bot.send_message(message.from_user.id, "Выберите категорию",
@@ -33,37 +31,49 @@ async def salam(message: types.Message):
 
 @dp.message_handler(lambda message: "start" in message.text.lower())
 async def start(message: types.Message):
-    #await bot.send_video(message.from_user.id, "BAACAgIAAxkBAAIKJmMLfIUGuimxS-DTlsb5cqSr1WsdAAL0IwAC5RZQSC7-V5eS635sKQQ")
     if message.from_user.id in pers.amdins:
-        await bot.send_message(message.from_user.id, "Салам, родная",
+        await bot.send_message(message.from_user.id, "Салам, родной",
                                reply_markup=keyboard_main.kb_mainwindow_admin)
     else:
-        await bot.send_message(message.from_user.id, "Здравствуйте, дорогой друг!\nВыберитe категорию, нажав на соответствующую кнопку",
+        await bot.send_photo(message.from_user.id, photos.logo)
+        await bot.send_message(message.from_user.id, "Здравствуйте, дорогой друг!\nВыберитe категорию, нажав на "
+                                                     "соответствующую кнопку",
                                reply_markup=keyboard_main.kb_mainwindow)
         await sql_db.user_add(message)
 
 @dp.message_handler(lambda message: "контакты" in message.text.lower())
 async def kontakts(message: types.Message):
-    await bot.send_message(message.from_user.id, "Телефон нашего кафе - +79900691693", reply_markup=keyboard_main.ikb_main)
+    await bot.send_message(message.from_user.id, "Телефон нашего launge бара - +73822570880",
+                           reply_markup=keyboard_main.ikb_main)
 
 @dp.message_handler(lambda message: "адрес" in message.text.lower())
 async def adress(message: types.Message):
-    await bot.send_message(message.from_user.id, "Наше кафе расположено по адресу: г. Скадовск, "
-                                                 "ул. Сергеевская, д. 11", reply_markup=keyboard_main.ikb_main)
+    await bot.send_message(message.from_user.id, "Наш launge бар расположен по адресу: г. Томск, "
+                                                 "ул. Розы Люксембург, д. 72", reply_markup=keyboard_main.ikb_main)
 
 @dp.message_handler(lambda message: "режим работы" in message.text.lower())
 async def time(message: types.Message):
-    await bot.send_message(message.from_user.id, "Наше кафе открыто для гостей ежедневно с 09.00 до 19.00", reply_markup=keyboard_main.ikb_main)
+    await bot.send_message(message.from_user.id, "Наш launge бар открыт для гостей ежедневно с 12.00 до 03.00",
+                           reply_markup=keyboard_main.ikb_main)
 
-@dp.callback_query_handler(text="О нашем кафе")
-@dp.message_handler(lambda message: "о нашем кафе" in message.text.lower())
+@dp.callback_query_handler(text="О нашем launge баре")
+@dp.message_handler(lambda message: "о нашем launge баре" in message.text.lower())
 async def about(message: types.Message):
-    await bot.send_message(message.from_user.id, "В нашем заведении всегда царит дружеская атмосфера.\n Вы можете ознакомиться "
+    await bot.send_message(message.from_user.id, "В данном разделе Вы можете ознакомиться с "
                                                  "интерьером зала, узнать наш адрес, время работы, телефон для связи.", reply_markup=keyboard_main.kb_ourbar)
     await bot.send_message(message.from_user.id,
                            text="Выберите категорию", reply_markup=keyboard_main.ikb_main)
 
 
+
+@dp.message_handler(lambda message: "магазин" in message.text.lower())
+async def store(message: types.Message):
+    await bot.send_message(message.from_user.id, "Раздел находится в разработке")
+
+
+@dp.message_handler(lambda message: "аренда кальяна" in message.text.lower())
+async def store(message: types.Message):
+    await bot.send_message(message.from_user.id, "Раздел находится в разработке")
 
 @dp.message_handler(lambda message: "интерьер" in message.text.lower())
 async def interier(message: types.Message):
@@ -80,14 +90,13 @@ async def interier2(cb: types.CallbackQuery):
     photo_file = InputMediaPhoto(photos.rooms[photo_number])
     await bot.edit_message_media(media=photo_file, message_id=cb.message.message_id,
                                  chat_id=cb.message.chat.id, reply_markup=keyboard_main.ikb_about)
-    temp_user[cb.from_user.id] = (temp_user.get(cb.from_user.id, 0) + 1) % 6
+    temp_user[cb.from_user.id] = (temp_user.get(cb.from_user.id, 0) + 1) % 9
 
 
 
 @dp.message_handler(lambda message: "наши мастера" in message.text.lower())
 async def masters(message: types.Message):
-    await bot.send_message(message.from_user.id, "Наши доблестные мастера кальянного дела", reply_markup=
-                           keyboard_main.kb_who_at_work)
+    await bot.send_message(message.from_user.id, "Наши доблестные мастера кальянного дела")
     """await bot.send_photo(message.from_user.id,
                          "AgACAgEAAxkBAAIH82MLNtpvLh0qdVsz8OgqwX5YYSRXAAKfqjEbh4xZRGhiN7Q_NpHPAQADAgADcwADKQQ")"""
 
@@ -105,6 +114,11 @@ async def hookah(message: types.Message):
     await bot.send_message(message.from_user.id, "Дымное удовольствие на любой вкус.")
     await bot.send_photo(message.from_user.id, photos.hookah, reply_markup=keyboard_main.ikb_main)
 
+@dp.message_handler(lambda message: "акции" in message.text.lower())
+async def actions(message: types.Message):
+    await bot.send_message(message.from_user.id, "Актуальные акции в нашем lounge баре")
+    for i in photos.actions:
+        await bot.send_photo(message.from_user.id, i, reply_markup=keyboard_main.ikb_main)
 
 @dp.callback_query_handler(lambda c: "menu" in c.data)
 @dp.message_handler(lambda message: "меню" in message.text.lower())
@@ -113,40 +127,43 @@ async def manu(message: types.Message):
     await bot.send_message(message.from_user.id, "Выберите категорию", reply_markup=keyboard_main.kb_menu)
 
 
-@dp.message_handler(lambda message: "закуски" in message.text.lower())
-async def zakus(message: types.Message):
-    await bot.send_photo(message.from_user.id, photos.menu["zakus"], reply_markup=keyboard_main.ikb_z_zakus)
-
-
-
-@dp.message_handler(lambda message: "салаты" in message.text.lower())
-async def salat(message: types.Message):
-    await bot.send_photo(message.from_user.id, photos.menu["salat"], reply_markup=keyboard_main.ikb_z_salat)
+@dp.message_handler(lambda message: "пицца" in message.text.lower())
+async def pizza(message: types.Message):
+    await bot.send_photo(message.from_user.id, photos.menu["pizza"], reply_markup=keyboard_main.ikb_main)
 
 
 @dp.message_handler(lambda message: "напитки" in message.text.lower())
 async def drink(message: types.Message):
-    await bot.send_photo(message.from_user.id, photos.menu["drink"], reply_markup=keyboard_main.ikb_z_drink)
+    await bot.send_photo(message.from_user.id, photos.menu["drink"], reply_markup=keyboard_main.ikb_main)
 
 
-@dp.message_handler(lambda message: "завтраки" in message.text.lower())
-async def hookah(message: types.Message):
-    await bot.send_photo(message.from_user.id, photos.menu["brekfast"], reply_markup=keyboard_main.ikb_z_brekf)
+@dp.message_handler(lambda message: "крафтовое пиво" in message.text.lower())
+async def krbeer(message: types.Message):
+    await bot.send_photo(message.from_user.id, photos.menu["krbeer"], reply_markup=keyboard_main.ikb_main)
 
 
-@dp.message_handler(lambda message: "горячие блюда" in message.text.lower())
-async def hookah(message: types.Message):
-    await bot.send_photo(message.from_user.id, photos.menu["hot"], reply_markup=keyboard_main.ikb_z_din)
+@dp.message_handler(lambda message: "пиво" in message.text.lower())
+async def beer(message: types.Message):
+    await bot.send_photo(message.from_user.id, photos.menu["beer"], reply_markup=keyboard_main.ikb_main)
 
 
-@dp.message_handler(lambda message: "бургер-сет" in message.text.lower())
-async def hookah(message: types.Message):
-    await bot.send_photo(message.from_user.id, photos.menu["burger"], reply_markup=keyboard_main.ikb_z_burg)
+@dp.message_handler(lambda message: "чаи" in message.text.lower())
+async def tea(message: types.Message):
+    await bot.send_photo(message.from_user.id, photos.menu["tea"], reply_markup=keyboard_main.ikb_main)
 
 
-@dp.message_handler(lambda message: "пицца" in message.text.lower())
-async def hookah(message: types.Message):
-    await bot.send_photo(message.from_user.id, photos.menu["pizza"], reply_markup=keyboard_main.ikb_z_pizza)
+@dp.message_handler(lambda message: "десерты" in message.text.lower())
+async def des(message: types.Message):
+    await bot.send_photo(message.from_user.id, photos.menu["des"], reply_markup=keyboard_main.ikb_main)
+
+
+@dp.message_handler(lambda message: "снеки" in message.text.lower())
+async def snack(message: types.Message):
+    await bot.send_photo(message.from_user.id, photos.menu["snack"], reply_markup=keyboard_main.ikb_main)
+
+@dp.message_handler(lambda message: "горячие закуски" in message.text.lower())
+async def zakus(message: types.Message):
+    await bot.send_photo(message.from_user.id, photos.menu["zakus"], reply_markup=keyboard_main.ikb_main)
 
 
 @dp.message_handler(lambda message: "отзывы" in message.text.lower())

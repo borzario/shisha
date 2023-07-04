@@ -55,14 +55,14 @@ async def masters(message: types.Message):
 @dp.message_handler(lambda message: message.text == "Ознакомиться с отзывами")
 async def read_tells(message: types.Message):
     tells: list = await sql_db.tells_of_another()
-    await bot.send_message(message.from_user.id, f"Отзыв о нашем кафе:\n"
+    await bot.send_message(message.from_user.id, f"Отзыв о нашем launge баре:\n"
                                                  f">>{random.choice(tells)}<<", reply_markup=keyboard_main.ikb_tells)
 
 
 @dp.callback_query_handler(text="next_tell")
 async def read_tells(cb: types.CallbackQuery):
     tells: list = await sql_db.tells_of_another()
-    await bot.edit_message_text(message_id=cb.message.message_id, chat_id=cb.message.chat.id, text=f"Отзыв о нашем кафе:\n"
+    await bot.edit_message_text(message_id=cb.message.message_id, chat_id=cb.message.chat.id, text=f"Отзыв о нашем launge баре:\n"
                                 f">>{random.choice(tells)}<<", reply_markup=keyboard_main.ikb_tells)
 
 
@@ -70,7 +70,7 @@ class Tell(StatesGroup):
     sost1 = State()
 
 async def tell1(message: types.Message):
-    await message.reply("Введите текст отзыва о нашем кафе(в одном сообщении). "
+    await message.reply("Введите текст отзыва о нашем launge баре(в одном сообщении). "
                         "Для отмены бронирования нажмите кнопку 'Отмена'",
                         reply_markup=keyboard_main.ikb_cancel)
     await Tell.sost1.set()

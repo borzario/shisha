@@ -11,7 +11,7 @@ import random
 
 @dp.message_handler(lambda message: message.text.lower() in ["я на смене", "/atwork"])
 async def smena(message: types.Message):
-    await bot.send_message(message.from_user.id, "Красава, зай!!", reply_markup=keyboard_main.kb_mainwindow_admin)
+    await bot.send_message(message.from_user.id, "Красава, братиш!!", reply_markup=keyboard_main.kb_mainwindow_admin)
     await sql_db.set_master(message)
 
 
@@ -20,12 +20,12 @@ class Brona(StatesGroup):
     s_no = State()
 
 async def brona(message: types.Message):
-    await bot.send_message(message.from_user.id, "Зай, введи номер брони")
+    await bot.send_message(message.from_user.id, "бро, введи номер брони")
     await Brona.sosta.set()
 
 
 async def brona_no(message: types.Message):
-    await bot.send_message(message.from_user.id, "Зай, введи номер брони")
+    await bot.send_message(message.from_user.id, "бро, введи номер брони")
     await Brona.s_no.set()
 
 async def bronb(message: types.Message, state=FSMContext):
@@ -55,7 +55,7 @@ class Spam(StatesGroup):
     sost2 = State()
 
 async def spam(messsage: types.Message):
-    await bot.send_message(messsage.from_user.id, "зай, введи текст рассылки")
+    await bot.send_message(messsage.from_user.id, "братка, введи текст рассылки")
     await Spam.sost1.set()
 
 
@@ -98,7 +98,7 @@ async def unz(cb: types.CallbackQuery):
 
 def registr_admin(dp: Dispatcher):
     dp.register_message_handler(brona, lambda message: "Подтвердить бронь" in message.text, state=None)
-    dp.register_message_handler(brona_no, lambda message: "Послать нахуй" in message.text, state=None)
+    dp.register_message_handler(brona_no, lambda message: "отменить бронь" in message.text, state=None)
     dp.register_message_handler(spam, lambda message: "Запилить рассылку" in message.text, state=None)
     dp.register_message_handler(cancel, state="*", commands='отмена')
     dp.register_message_handler(cancel, Text(equals='отмена', ignore_case=True), state="*")
