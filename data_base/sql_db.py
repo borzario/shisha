@@ -1,5 +1,5 @@
 import sqlite3 as sq
-from data_base import goods
+
 
 from aiogram import types
 
@@ -39,9 +39,7 @@ async def set_master(message):
 async def master():
     nobr = cur.execute("SELECT MAX(ROWID) FROM master_at_work").fetchall()
     tobr = cur.execute(f"SELECT master_id FROM master_at_work WHERE ROWID == {nobr[0][0]}").fetchall()
-    photo = cur.execute(f"SELECT photo FROM all_masters WHERE id == {tobr[0][0]}").fetchall()
-    about = cur.execute(f"SELECT about FROM all_masters WHERE id == {tobr[0][0]}").fetchall()
-    return (tobr[0][0], photo[0][0], about[0][0])
+    return (tobr[0][0])
 
 async def bron(message):
     cur.execute("INSERT INTO bron VALUES (?, ?, ?)", (message.from_user.id, message.text, message.from_user.username))
@@ -119,11 +117,11 @@ async def give_code(user: int, promo: str):
     cur.execute(f"UPDATE tells SET code == ? WHERE id == {user}", (f"{promo}",))
     base.commit()
 
-async def add_zak(user: int, tov: str):
+"""async def add_zak(user: int, tov: str):
     real_tov = goods.gods[tov]
     cur.execute("INSERT INTO korzina VALUES (?, ?, ?)",
                 (user, real_tov[0], real_tov[1]))
-    base.commit()
+    base.commit()"""
 
 
 async def get_tov_from_korzina(user: int):

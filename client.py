@@ -46,9 +46,10 @@ async def cancel(message : types.Message, state = FSMContext):
 
 @dp.message_handler(lambda message: message.text.lower() in ["кто на смене?", '/master'])
 async def masters(message: types.Message):
-    master = await sql_db.master()
-    await bot.send_photo(message.from_user.id, f"{master[1]}")
-    await bot.send_message(message.from_user.id, f"На смене рулит всем {master[2]}", reply_markup=keyboard_main.ikb_main)
+    master = int(await sql_db.master())
+    await bot.send_photo(message.from_user.id, f"{pers.masters[master][1]}")
+    await bot.send_message(message.from_user.id, f"Сегодня дымным процессом рулит {pers.masters[master][0]}",
+                           reply_markup=keyboard_main.ikb_main)
 
 
 
