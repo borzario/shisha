@@ -15,10 +15,10 @@ def db_start():
     base.execute('CREATE TABLE IF NOT EXISTS users(user_id TEXT PRIMARY KEY)')
     base.execute('CREATE TABLE IF NOT EXISTS master_at_work(master_id TEXT)')
     base.execute('CREATE TABLE IF NOT EXISTS bron(user TEXT, time TEXT, user_name TEXT)')
-    base.execute('CREATE TABLE IF NOT EXISTS all_masters(id TEXT, photo TEXT, about TEXT)')
+    #base.execute('CREATE TABLE IF NOT EXISTS all_masters(id TEXT, photo TEXT, about TEXT)')
     base.execute('CREATE TABLE IF NOT EXISTS spam(text TEXT, photo TEXT)')
     base.execute("CREATE TABLE IF NOT EXISTS tells(id INTEGER, words TEXT, code TEXT, oke TEXT)")
-    base.execute("CREATE TABLE IF NOT EXISTS korzina(id INTEGER, tov TEXT, price INTEGER)")
+    #base.execute("CREATE TABLE IF NOT EXISTS korzina(id INTEGER, tov TEXT, price INTEGER)")
     base.commit()
 
 
@@ -69,17 +69,17 @@ async def spam(data):
             pass
 
 
-async def add_photo(message):
+"""async def add_photo(message):
     cur.execute("INSERT INTO all_masters VALUES (?, ?, ?)",
                 (message.from_user.id, message.photo[0].file_id, None))
     base.commit()
+"""
 
-
-async def add_name(message):
+"""async def add_name(message):
     last_master_num = int(cur.execute("SELECT MAX(ROWID) FROM all_masters").fetchall()[0][0])
     cur.execute(f"UPDATE all_masters SET about == ? WHERE ROWID == {last_master_num}", (f"{message.text}",))
     base.commit()
-
+"""
 
 async def tells_to_base(message: types.Message):
     cur.execute("INSERT INTO tells VALUES (?, ?, ?, ?)",
@@ -97,7 +97,6 @@ async def get_user_tell(code: int):
 
 
 async def tells_of_another():
-    bad = "bad"
     words: list = [i[1] for i in cur.execute(f"SELECT * FROM tells").fetchall() if i[3] != "bad"]
     return words
 
@@ -124,10 +123,10 @@ async def give_code(user: int, promo: str):
     base.commit()"""
 
 
-async def get_tov_from_korzina(user: int):
+"""async def get_tov_from_korzina(user: int):
     return cur.execute(f"SELECT ROWID, * FROM korzina WHERE id== {user}").fetchall()
 
 
 async def clear_korzinu(user: int):
     cur.execute(f"DELETE FROM korzina WHERE id == {user}")
-    base.commit()
+    base.commit()"""

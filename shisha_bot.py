@@ -17,6 +17,7 @@ async def on_startup(_):
 
 
 temp_user = {}
+temp_mast = {}
 
 
 @dp.callback_query_handler(text="в начало")
@@ -96,9 +97,11 @@ async def interier2(cb: types.CallbackQuery):
 
 @dp.message_handler(lambda message: "наши мастера" in message.text.lower())
 async def masters(message: types.Message):
-    await bot.send_message(message.from_user.id, "Наши доблестные мастера кальянного дела")
-    """await bot.send_photo(message.from_user.id,
-                         "AgACAgEAAxkBAAIH82MLNtpvLh0qdVsz8OgqwX5YYSRXAAKfqjEbh4xZRGhiN7Q_NpHPAQADAgADcwADKQQ")"""
+    temp_mast[message.from_user.id] = temp_mast.get(message.from_user.id, 0)
+    photo_number: int = temp_user[message.from_user.id]
+    masters_photo = []
+    await bot.send_photo(message.from_user.id, photos.rooms[photo_number], reply_markup=keyboard_main.ikb_about)
+    temp_user[message.from_user.id] = (temp_user.get(message.from_user.id, 0) + 1) % 6
 
 
 @dp.callback_query_handler(text="Услуги нашего заведения")
