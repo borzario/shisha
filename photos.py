@@ -1,3 +1,5 @@
+from pers import masters
+
 rooms = ["AgACAgEAAxkBAAIBDmSjlDlUwFt87oCdcwGg-6iHHMyaAAJ8qzEbxeQgReWrtORWL0WRAQADAgADcwADLwQ",
          "AgACAgEAAxkBAAIBEGSjlEGKkbbg18MdUDPwl67j6r-4AAJ9qzEbxeQgRcH9TDvTNwmKAQADAgADcwADLwQ",
          "AgACAgEAAxkBAAIBEmSjlEfQsLyl9iITu-s2TnH7QjJDAAJ-qzEbxeQgRUUJxqvH8eqaAQADAgADcwADLwQ",
@@ -24,5 +26,10 @@ menu = {
     "menu": "AgACAgEAAxkBAAIBV2SjngM510BvTXV9fWvUM8z2fWl-AAKPqzEbxeQgRUTpWcXZuE0yAQADAgADcwADLwQ"}
 
 
-
 logo = "AgACAgEAAxkBAAIBM2SjmqFSmB3E7ej4DLwDC90q2kBNAAKOqzEbxeQgRVQ9O4Utr8PcAQADAgADcwADLwQ"
+
+
+rent = "AgACAgEAAxkBAAIDi2Srs119sKBNT-equtHxv3wwsN-1AAI0qzEbgfRhRZ1Xy_Hgr9avAQADAgADcwADLwQ"
+
+
+masters_photo = [i[1] for i in masters.values()]

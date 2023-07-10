@@ -74,14 +74,14 @@ async def store(message: types.Message):
 
 @dp.message_handler(lambda message: "аренда кальяна" in message.text.lower())
 async def store(message: types.Message):
-    await bot.send_message(message.from_user.id, "Раздел находится в разработке")
+    await bot.send_photo(message.from_user.id, photos.rent, reply_markup=keyboard_main.ikb_main)
 
 @dp.message_handler(lambda message: "интерьер" in message.text.lower())
 async def interier(message: types.Message):
     temp_user[message.from_user.id] = temp_user.get(message.from_user.id, 0)
     photo_number: int = temp_user[message.from_user.id]
     await bot.send_photo(message.from_user.id, photos.rooms[photo_number], reply_markup=keyboard_main.ikb_about)
-    temp_user[message.from_user.id] = (temp_user.get(message.from_user.id, 0) + 1) % 6
+    temp_user[message.from_user.id] = (temp_user.get(message.from_user.id, 0) + 1) % 9
 
 
 @dp.callback_query_handler(text="next_photo")
@@ -98,10 +98,19 @@ async def interier2(cb: types.CallbackQuery):
 @dp.message_handler(lambda message: "наши мастера" in message.text.lower())
 async def masters(message: types.Message):
     temp_mast[message.from_user.id] = temp_mast.get(message.from_user.id, 0)
-    photo_number: int = temp_user[message.from_user.id]
-    masters_photo = []
-    await bot.send_photo(message.from_user.id, photos.rooms[photo_number], reply_markup=keyboard_main.ikb_about)
-    temp_user[message.from_user.id] = (temp_user.get(message.from_user.id, 0) + 1) % 6
+    photo_number: int = temp_mast[message.from_user.id]
+    await bot.send_photo(message.from_user.id, photos.masters_photo[photo_number],
+                         reply_markup=keyboard_main.ikb_next_master)
+    temp_mast[message.from_user.id] = (temp_mast.get(message.from_user.id, 0) + 1) % 4
+
+@dp.callback_query_handler(text="next_master")
+async def masters2(cb: types.CallbackQuery):
+    temp_mast[cb.from_user.id] = temp_mast.get(cb.from_user.id, 0)
+    photo_number: int = temp_mast[cb.from_user.id]
+    photo_file = InputMediaPhoto(photos.masters_photo[photo_number])
+    await bot.edit_message_media(media=photo_file, message_id=cb.message.message_id,
+                                 chat_id=cb.message.chat.id, reply_markup=keyboard_main.ikb_next_master)
+    temp_mast[cb.from_user.id] = (temp_mast.get(cb.from_user.id, 0) + 1) % 4
 
 
 @dp.callback_query_handler(text="Услуги нашего заведения")
