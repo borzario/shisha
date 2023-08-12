@@ -16,6 +16,7 @@ async def on_startup(_):
     sql_db.db_start()
 
 
+
 temp_user = {}
 temp_mast = {}
 
@@ -37,7 +38,7 @@ async def start(message: types.Message):
                                reply_markup=keyboard_main.kb_mainwindow_admin)
     else:
         await bot.send_photo(message.from_user.id, photos.logo)
-        await bot.send_message(message.from_user.id, "Здравствуйте, дорогой друг!\nВыберитe категорию, нажав на "
+        await bot.send_message(message.from_user.id, "Здравствуйте!\nВыберитe категорию, нажав на "
                                                      "соответствующую кнопку",
                                reply_markup=keyboard_main.kb_mainwindow)
         await sql_db.user_add(message)
@@ -69,12 +70,14 @@ async def about(message: types.Message):
 
 @dp.message_handler(lambda message: "магазин" in message.text.lower())
 async def store(message: types.Message):
+    await bot.send_photo(message.from_user.id, "AgACAgEAAxkBAAIFl2SuYQKZlzy-r6NUgT8rQzJtyLQFAAK_qzEbZnlxRSZN4oKxkxh7AQADAgADcwADLwQ")
     await bot.send_message(message.from_user.id, "Раздел находится в разработке")
+
 
 
 @dp.message_handler(lambda message: "аренда кальяна" in message.text.lower())
 async def store(message: types.Message):
-    await bot.send_photo(message.from_user.id, photos.rent, reply_markup=keyboard_main.ikb_main)
+    await bot.send_photo(message.from_user.id, photos.rent, reply_markup=keyboard_main.ikb_hookah_dost)
 
 @dp.message_handler(lambda message: "интерьер" in message.text.lower())
 async def interier(message: types.Message):
@@ -180,8 +183,8 @@ async def zakus(message: types.Message):
 
 @dp.message_handler(lambda message: "отзывы" in message.text.lower())
 async def tell_about_us(message: types.Message):
-    await bot.send_message(message.from_user.id, "Вы можете оставить свой отзыв и получить за него подарочный кофе, а также "
-                                                 "прочитать отзывы других посетителей нашего кафе",
+    await bot.send_message(message.from_user.id, "Вы можете оставить свой отзыв и получить за него чай в подарок, а также "
+                                                 "прочитать отзывы других посетителей нашего launge бара",
                            reply_markup=keyboard_main.kb_tells)
     await bot.send_message(message.from_user.id, "Для возврата в главное меню нажмите кнопку", reply_markup=keyboard_main.ikb_main)
 

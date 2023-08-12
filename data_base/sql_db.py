@@ -1,10 +1,13 @@
 import sqlite3 as sq
+from datetime import date, datetime
+from docxtpl import DocxTemplate
 
 
 from aiogram import types
 
 import admins
 from create_bot import dp, bot
+
 
 def db_start():
     global base, cur
@@ -115,6 +118,43 @@ async def get_all_users_with_code_tell() -> list:
 async def give_code(user: int, promo: str):
     cur.execute(f"UPDATE tells SET code == ? WHERE id == {user}", (f"{promo}",))
     base.commit()
+
+
+
+async def add_text(data):
+    today = str(date.today())
+    doc = DocxTemplate("data_base/texts/dogovor.docx")
+    print(datetime(2023, 7, 9, 0, 0).isoweekday())
+    price = 0
+    for i in data["days"][:-1]:
+        if i.isoweekday() in (5, 6):
+            price += 700
+        else:
+            price += 500
+    cont = {
+        "day": today[-2:],
+        "month": today[5:7],
+        "year": today[:4],
+        "fam": data["fam"],
+        "name": data["name"],
+        "sname": data["sname"],
+        "days": str(len(data["days"])-1),
+        "price": str(price),
+        "bday": data["bday"],
+        "pasp": data["pasp"],
+        "kem": data["kem"],
+        "reg": data["reg"],
+        "tel": data["tel"]
+    }
+    doc.render(cont)
+    doc.save(f"data_base/texts/Договор аренды {data['user']}.docx")
+
+
+
+
+
+
+
 
 """async def add_zak(user: int, tov: str):
     real_tov = goods.gods[tov]
